@@ -1,0 +1,34 @@
+{
+  "name": "project2-games-app",
+  "version": "1.0.0",
+  "description": "multiplayer game app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shama009/Project2-Games-app.git"
+  },
+  "keywords": [
+    "game",
+    "app",
+    "node",
+    "express",
+    "socket"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shama009/Project2-Games-app/issues"
+  },
+  "homepage": "https://github.com/shama009/Project2-Games-app#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mysql2": "^1.5.1",
+    "phaser": "^2.6.2",
+    "sequelize": "^4.32.1",
+    "socket.io": "^2.0.4"
+  }
+}
