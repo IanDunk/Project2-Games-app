@@ -53,30 +53,33 @@
 </head>
 
 <body>
-    <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off" />
-        <button>Send</button>
-    </form>
+    <h1>Open chat</h1>
+    <div class="chat">
+        <ul id="messages">
 
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        </ul>
+    </div>
+    <hr />
+    <input size="28" type="text" id="message" />
+    <input type="button" onclick="send()" value="send" />
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script>
-  $(function () {
-    var socket = io();
-    $('form').submit(function(){
-    //   console.log ($('#m').val());
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-    socket.on('new message', function(msg){
-        console.log ("msg " + msg);
-      $('#messages').append($('<li>').text(msg.msg));
-    });
-  });
-</script>
+        var socket = io();
+
+        function send() {
+            var message = document.getElementById("message").value;
+            socket.emit("send", { "message": message });
+            document.getElementById("message").value = "";
+        }
+
+        socket.on("new", function (data) {
+            console.log("NEW MESSAGE : ", data);
+            var chatMessage = document.createElement("li");
+            chatMessage.innerHTML = data.message;
+            document.getElementById("messages").appendChild(chatMessage)
+        });
+    </script>
 </body>
 
 </html>

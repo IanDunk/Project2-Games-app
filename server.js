@@ -7,8 +7,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var http = require('http').createServer(app);
+var io = require('socket.io').listen(http);
 
 // =============================================================
 var PORT = process.env.PORT || 8080;
@@ -23,22 +23,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-
-// Listener for incoming Socket connections 
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-    io.emit('new message', {msg: msg});
-  });
-});
-
 // Static directory
 app.use(express.static("public"));
 
-// Home page route
-app.get('/', function(req, res){
+app.get('/',function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
+
+io.on('connection',function(socket){
+  console.log('SOMEONE CONNECTED:', socket.id);
+
+  socket.on('send', function(data){
+    console.log(data);
+    io.sockets.emit('new', data);
+  });
+});
+
 
 // Routes
 // =============================================================
